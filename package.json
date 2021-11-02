@@ -1,0 +1,29 @@
+{
+    "name": "h",
+    "description": "H is a micro-library (800 B) to create DOM Trees using HyperScript template.",
+    "version": "0.0.0",
+    "license": "MIT",
+    "private": true,
+    "main": "dist/esm/index.js",
+    "umd:main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "unpkg": "dist/cjs/index.js",
+    "typings": "src/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git@gc-victor:gc-victor/h.git"
+    },
+    "keywords": [],
+    "devDependencies": {
+        "esbuild": "0.13.4",
+        "esm": "3.2.25",
+        "gzip-size": "6.0.0",
+        "html-element": "^2.3.1",
+        "jsdom": "18.0.0",
+        "prettier": "2.4.1",
+        "t-t": "git+https://github.com/gc-victor/t-t.git#138e449bf3ee31c9d438ae88c8363148864b3c45"
+    },
+    "files": [
+        "dist"
+    ]
+}
