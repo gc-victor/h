@@ -63,8 +63,9 @@
   var src_default = h2;
 
   // examples/jsx/h-shim.js
+  var fragment = "__FRAGMENT__";
   function h(type, props, children) {
-    return src_default(type, props, arguments.length > 3 ? [].slice.call(arguments, 2) : children);
+    return type !== fragment ? src_default(type, props, arguments.length > 3 ? [].slice.call(arguments, 2) : children) : [].slice.call(arguments, 2);
   }
 
   // examples/jsx/app.jsx
@@ -81,20 +82,21 @@
   var add = (ev) => {
     count = Number(ev.target.value);
   };
+  var content = () => /* @__PURE__ */ h(fragment, null, /* @__PURE__ */ h("h1", null, "Counter"), /* @__PURE__ */ h("button", {
+    onClick: increment
+  }, "+"), /* @__PURE__ */ h("input", {
+    ref: (el) => input = el,
+    onInput: add,
+    name: "input",
+    type: "number",
+    value: count
+  }), /* @__PURE__ */ h("button", {
+    onClick: decrement
+  }, "-"));
   var counter = () => {
     return /* @__PURE__ */ h("div", {
       id: "app"
-    }, /* @__PURE__ */ h("h1", null, "Counter"), /* @__PURE__ */ h("button", {
-      onClick: increment
-    }, "+"), /* @__PURE__ */ h("input", {
-      ref: (el) => input = el,
-      onInput: add,
-      name: "input",
-      type: "number",
-      value: count
-    }), /* @__PURE__ */ h("button", {
-      onClick: decrement
-    }, "-"));
+    }, content());
   };
   var app = document.getElementById("app");
   app.parentNode.replaceChild(counter(), app);

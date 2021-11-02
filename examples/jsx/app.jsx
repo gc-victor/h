@@ -15,13 +15,17 @@ const add = (ev) => {
     count = Number(ev.target.value);
 };
 
-const counter = () => {
-    return <div id="app">
+const content = () => (
+    <>
         <h1>Counter</h1>
         <button onClick={increment}>+</button>
-        <input ref={(el) => input = el} onInput={add} name="input" type="number" value={count} />
+        <input ref={(el) => (input = el)} onInput={add} name="input" type="number" value={count} />
         <button onClick={decrement}>-</button>
-    </div>;
+    </>
+);
+
+const counter = () => {
+    return <div id="app">{content()}</div>;
 };
 
 const app = document.getElementById('app');
