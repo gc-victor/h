@@ -18,7 +18,7 @@ static : ## Run a static page
 	node -r esm examples/ssr/counter.js || exit $? ;\
 
 server : ## Run a dev static server
-	pnpx github:gc-victor/d-d#9adcf46bf2f346d7dd1f79758fe14064cc8b0734
+	pnpm --package=github:gc-victor/d-d dlx d-d
 
 test : ## Execute tests
 	TEST=true node -r esm tests/index.js || exit $? ;\
