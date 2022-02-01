@@ -21,6 +21,9 @@ const content = () => (
         <button onClick={increment}>+</button>
         <input ref={(el) => (input = el)} onInput={add} name="input" type="number" value={count} />
         <button onClick={decrement}>-</button>
+        <ul>
+            {['0', '1'].map((i) => <li>{i}</li>)}
+        </ul>
     </>
 );
 

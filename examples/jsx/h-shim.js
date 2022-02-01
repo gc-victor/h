@@ -1,8 +1,18 @@
 import hh from '../src/index.js';
 
-export const fragment = '__FRAGMENT__';
-export default function h(type, props, children) {
-    return type !== fragment
-        ? hh(type, props, arguments.length > 3 ? [].slice.call(arguments, 2) : children)
-        : [].slice.call(arguments, 2);
+export default function h(type, props, ...children) {
+    if (typeof type === 'function') {
+        return type({
+            ...(props || {}),
+            children: [].concat.apply([], children),
+        });
+    }
+
+    return hh(type, props || {}, [].concat.apply([], children));
 }
+
+function Fragment(props) {
+    return props.children;
+}
+
+export { Fragment, h };

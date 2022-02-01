@@ -24,20 +24,17 @@
     }
     for (let i = 0; i < length; i++) {
       const key = keys[i];
+      if (key && !/^key$|^on|^ref$|^$/.test(key)) {
+        if (key !== "checked" || key === "checked" && props[key]) {
+          element.setAttribute(key === "htmlFor" ? "for" : key === "className" ? "class" : CAMEL_PROPS.test(key) && key.replace(/[A-Z0-9]/, "-$&").toLowerCase() || key, props[key]);
+        }
+      }
       if (key && /^on/.test(key)) {
         const eventType = key.toLowerCase().substring(2);
         element.__handler__ = element.__handler__ || {};
         element.__handler__[eventType] = props[key];
         !events[eventType] && document.addEventListener(eventType, handler);
         events[eventType] = 1;
-      }
-      if (key && !/^key$/.test(key) && !/^on/.test(key) && !/^ref$/.test(key)) {
-        const classProp = key === "className" ? "class" : "";
-        const forProp = key === "htmlFor" ? "for" : "";
-        const hyphenated = CAMEL_PROPS.test(key) && key.replace(/[A-Z0-9]/, "-$&").toLowerCase();
-        if (key !== "checked" || key === "checked" && props[key]) {
-          element.setAttribute(forProp || classProp || hyphenated || key, props[key]);
-        }
       }
       if (key && /^key$/.test(key)) {
         element.__key__ = props[key];
@@ -63,9 +60,17 @@
   var src_default = h2;
 
   // examples/jsx/h-shim.js
-  var fragment = "__FRAGMENT__";
-  function h(type, props, children) {
-    return type !== fragment ? src_default(type, props, arguments.length > 3 ? [].slice.call(arguments, 2) : children) : [].slice.call(arguments, 2);
+  function h(type, props, ...children) {
+    if (typeof type === "function") {
+      return type({
+        ...props || {},
+        children: [].concat.apply([], children)
+      });
+    }
+    return src_default(type, props || {}, [].concat.apply([], children));
+  }
+  function Fragment(props) {
+    return props.children;
   }
 
   // examples/jsx/app.jsx
@@ -82,7 +87,7 @@
   var add = (ev) => {
     count = Number(ev.target.value);
   };
-  var content = () => /* @__PURE__ */ h(fragment, null, /* @__PURE__ */ h("h1", null, "Counter"), /* @__PURE__ */ h("button", {
+  var content = () => /* @__PURE__ */ h(Fragment, null, /* @__PURE__ */ h("h1", null, "Counter"), /* @__PURE__ */ h("button", {
     onClick: increment
   }, "+"), /* @__PURE__ */ h("input", {
     ref: (el) => input = el,
@@ -92,7 +97,7 @@
     value: count
   }), /* @__PURE__ */ h("button", {
     onClick: decrement
-  }, "-"));
+  }, "-"), /* @__PURE__ */ h("ul", null, ["0", "1"].map((i) => /* @__PURE__ */ h("li", null, i))));
   var counter = () => {
     return /* @__PURE__ */ h("div", {
       id: "app"
