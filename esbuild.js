@@ -1,5 +1,5 @@
-const { buildSync } = require('esbuild');
-const gzipSize = require('gzip-size');
+import * as esbuild from 'esbuild';
+import { gzipSizeFromFileSync } from 'gzip-size';
 
 [
     {
@@ -17,10 +17,10 @@ const gzipSize = require('gzip-size');
         outdir: 'dist/iife',
     },
 ].forEach((config) => {
-    const result = buildSync({
+    const result = esbuild.buildSync({
         bundle: true,
         entryNames: '[dir]/[name]',
-        entryPoints: ['src/index.js'],
+        entryPoints: ['index.js'],
         metafile: true,
         minify: true,
         ...config,
@@ -31,12 +31,13 @@ const gzipSize = require('gzip-size');
 
     Object.keys(result.metafile.outputs).forEach((key) => {
         total = total + result.metafile.outputs[key].bytes;
-        totalGzip = totalGzip + gzipSize.fileSync(key);
+        totalGzip = totalGzip + gzipSizeFromFileSync(key);
+
         console.log(
             key,
             formatBytes(result.metafile.outputs[key].bytes),
             '- gzip:',
-            formatBytes(gzipSize.fileSync(key))
+            formatBytes(gzipSizeFromFileSync(key))
         );
     });
 

@@ -1,4 +1,4 @@
-import h from './src/index.js';
+import h from './h.js';
 
 let count = 0;
 let input;
@@ -9,18 +9,15 @@ const increment = () => {
 };
 const decrement = () => {
     count = count - 1;
-    // input.value = count;
-    const app = document.getElementById('app');
-    app.parentNode.replaceChild(counter(), app);
+    input.value = count;
 };
 const add = (ev) => {
     count = Number(ev.target.value);
 };
 
 const counter = () => {
-    return h('div', { id: 'app' }, [
-        h('h1', null, ['Counter']),
-        h('button', { onClick: increment }, ['+']),
+    return h('form', { onSubmit: (ev) => ev.preventDefault() }, [
+        h('button', { type: 'button', onClick: increment }, ['+']),
         h('input', {
             ref: (el) => (input = el),
             onInput: add,
@@ -28,10 +25,9 @@ const counter = () => {
             type: 'number',
             value: count,
         }),
-        ...['0', '1'].map((i) => h('span', {}, i)),
-        h('button', { onClick: decrement }, [h('span', {}, ['-'])]),
+        h('button', { type: 'button', onClick: decrement }, [h('span', {}, ['-'])]),
     ]);
 };
 
-const app = document.getElementById('app');
-app.parentNode.replaceChild(counter(), app);
+const form = document.querySelector('form');
+form.parentNode.replaceChild(counter(), form);

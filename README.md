@@ -1,14 +1,13 @@
 # H
 
-H is a micro-library (800 B) to create DOM Trees using HyperScript template.
+H is a micro-library (~1 KB) to create DOM Trees using HyperScript template.
 
 ## Key Features
 
-- Micro-library 800 B
-- No compilation needed
 - Real DOM Tree
 - SSR out of the box
-- Only one dependency for SSR
+- JSX compatible
+- Zero dependencies
 - Small API, not much to learn
 
 ## Let's Play
@@ -136,16 +135,12 @@ const App = () =>
     </div>;
 ```
 
-### Dependencies
+### SSR
 
-The only dependency is [html-element](https://github.com/1N50MN14/html-element) for Server Side Rendering or Static Site Generation.
-
-```console
-npm install html-element
-```
+To use it in SSR, you only need to import the `h/document` module into the main file.
 
 ```javascript
-import 'html-element/global-shim';
+import 'h/document';
 
 // Your code ...
 ```

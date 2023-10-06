@@ -1,3 +1,13 @@
+/// <reference lib="dom" />
+
+export type FragmentProps = {
+    children: HTMLAttributes<HTMLElement>[] | string[];
+}
+
+export function Fragment(props: FragmentProps): HTMLAttributes<HTMLElement>[] | string[] {
+    return props.children;
+}
+
 export default h;
 export declare function h<T extends HTMLElements>(tagName: T, attributes: HTMLElementsAttributes[T], children?: HTMLAttributes<HTMLElement>[] | string[]): IntrinsicElements[T];
 export declare type HTMLElements = keyof IntrinsicElements;
@@ -769,4 +779,4 @@ export interface IntrinsicElements {
     tspan: SVGAttributes<SVGTSpanElement>;
     use: SVGAttributes<SVGUseElement>;
 }
-export {};
+export { };

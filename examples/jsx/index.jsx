@@ -1,5 +1,3 @@
-import h from './h-shim';
-
 let count = 0;
 let input;
 
@@ -15,20 +13,21 @@ const add = (ev) => {
     count = Number(ev.target.value);
 };
 
-const content = () => (
+const Title = ({ children }) => (
+    <h1>{children}</h1>
+);
+
+const Content = () => (
     <>
-        <h1>Counter</h1>
+        <Title>Counter JSX</Title>
         <button onClick={increment}>+</button>
         <input ref={(el) => (input = el)} onInput={add} name="input" type="number" value={count} />
         <button onClick={decrement}>-</button>
-        <ul>
-            {['0', '1'].map((i) => <li>{i}</li>)}
-        </ul>
     </>
 );
 
 const counter = () => {
-    return <div id="app">{content()}</div>;
+    return <div id="app"><Content /></div>;
 };
 
 const app = document.getElementById('app');
